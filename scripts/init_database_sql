@@ -1,0 +1,38 @@
+--CReate DataBase for Data WareHouse Project
+/*
+------------------------------------------------------------------------------------------------------------------------------
+Script Purpose : 
+	This Script Creates a new database named 'DatawareHouse' after checking
+	if it is already exists,it is dropped and Created.Additionally,The script sets up  three schema
+	within the database: bronze,Gold,Silver
+---------------------------------------------------------------------------------------------------------------------------------
+Warning : 
+	Running  this scrip will drop  the entire database  if exists.all data  in te database 
+	will be paranently deleted.Proceed with Caution and ensure backup.
+---------------------------------------------------------------------------------------------------------------------------------	
+*/
+USE master;
+GO
+--DROP AND CREATE A DATAWAREHOUSE DATABASE
+IF EXIST (SELECT 1 FROM sys.databases WHERE name= 'DataWareHouse')
+BEGIN
+	ALTER DATABASE DataWareHouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+	DROP DATABASE DataWareHouse;
+
+END;
+
+GO
+--CREATE DATABASE 'DataWareHouse' database
+CREATE DATABASE DataWareHouse;
+
+GO
+
+USE DataWareHouse;
+GO
+
+CREATE SCHEMA Bronze;
+GO
+CREATE SCHEMA Silver;
+GO
+CREATE SCHEMA Gold;
+
