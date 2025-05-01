@@ -1,5 +1,5 @@
 /*
-DDL Script: Create Bronze Table
+DDL Script: Create Bronze Table structure
 
 Script Purpose : This script create Table in the  'Bronze' schema Dropping Existing Tables if Already exists
 Run This Script to redifine the  DDL Structure of Bronze  tables
