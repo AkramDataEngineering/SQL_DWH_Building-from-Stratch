@@ -1,3 +1,13 @@
+/*Stored Procedure: Load Bronze Layer
+Script Purpose : This Script Load data into the Bronze Layer tables from the external CSV fies
+Action : Truncate the Bronze Tables before Loading data .
+	Uses : BULK INSERT to load the data from csv to bronze tables
+Parameter : None
+		 This Store procedure doesnot accept any parameter or returns any values
+
+Uses Example : EXEC Bronze.load_bronze;
+*/
+
 /*BULK INSERT : Method to insert all data Together ,Not Row by Row.
 --FULL LOAD using Truncate first and all.
 --For FIle : cust_info.csv
