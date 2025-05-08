@@ -1,4 +1,11 @@
+/*
+The Script is used to Load and Clean the Bronze layer Data and Create a New Silver Layer with same Table and  data but removing Redundancy,Duplicate etc
 
+Feature : It will also Capture the Batch Processing time in second and Load Durations.
+
+We have created a Stored procudure with the script which you an execute using EXEC Silver.load_silver
+
+*/
 
 CREATE OR ALTER PROCEDURE Silver.load_silver AS
 BEGIN
