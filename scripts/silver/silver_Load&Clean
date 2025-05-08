@@ -1,9 +1,12 @@
 /*
 The Script is used to Load and Clean the Bronze layer Data and Create a New Silver Layer with same Table and  data but removing Redundancy,Duplicate etc
-
+The Stored procedure profore the ELT (Extract, Load and Transform) proceess to populat the Silver Schema Table from the Bronze Schema.
 Feature : It will also Capture the Batch Processing time in second and Load Durations.
+Action : 
+	Truncate Silver Table
+	Insert Tranformed and Clean data fro Bronze into Silver Table.
 
-We have created a Stored procudure with the script which you an execute using EXEC Silver.load_silver
+We have created or ALTER  a Stored procudure with the script which you an execute using " EXEC Silver.load_silver " .
 
 */
 
