@@ -1,4 +1,4 @@
-# SQL_DWH_Project_Baraa
+# SQL_DWH_Project (Star Schema)
 Build a Model Data WareHouse with SQL Server Including ETL, Data Modeling and Analytics
 Data Warehouse and Analytics Project
 Welcome to the Data Warehouse and Analytics Project repository! 🚀
