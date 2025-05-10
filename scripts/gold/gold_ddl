@@ -1,0 +1,93 @@
+--GOLD layer_ddl
+/*
+DDL script create Gold Layer Object (Views)
+Script Purpose : 
+                This Script create view(object) in the Gold Layer View of Data warehouse
+                The Gold Layer reprsent the Final Dimension and Fact Table (Star Schema)
+Each View Performs tranformation and combines data from the Silver Layer to produce a clean,enriched and Bussiness ready dataset.              
+This view can be directly queried for the Analytics and reporting and its Dynamic if yu want to do changes in the view
+*/
+
+--GOLD layer_ddl
+
+IF OBJECT_ID('Gold.dim_customers','V') IS NOT NULL
+	DROP VIEW Gold.dim_customers;
+
+	GO
+
+CREATE VIEW Gold.dim_customers AS  --Object as View
+SELECT
+	ROW_NUMBER() OVER(ORDER BY ci.cst_id) as customer_key, --Surogated key as Unique identifieer(System Generated)
+	ci.cst_id AS customer_id,
+	ci.cst_key AS customer_number,
+	ci.cst_firstname AS first_name,
+	ci.cst_lastname as last_name,
+	la.cntry as country,
+	ci.cst_material_status as marital_status,
+	CASE WHEN ci.cst_gndr != 'n/a' THEN ci.cst_gndr --CRM is the master for deciding the gender of the Customer as per bussiness rule
+		 ELSE COALESCE(ca.gen,'n/a')
+	END AS gender,
+	ca.bdate AS birthdate,
+	ci.cst_create_date AS create_date
+FROM Silver.crm_cust_info ci
+LEFT JOIN Silver.erp_cust_az12 ca
+ON		ci.cst_key = ca.cid
+LEFT JOIN Silver.erp_loc_a101 la
+ON		ci.cst_key = la.cid ;
+
+	GO
+
+--CREATE Dimension Products
+IF OBJECT_ID('Gold.dim_products','V') IS NOT NULL
+	DROP VIEW Gold.dim_products;
+
+	GO
+
+CREATE VIEW Gold.dim_products AS 
+SELECT 
+	ROW_NUMBER() OVER(ORDER BY prd_start_dt,prd_key) AS product_key,
+	pn.prd_id AS product_id,
+	pn.prd_key AS product_number,
+	pn.prd_nm AS product_name,
+	pn.cat_id AS category_id,
+	pc.cat AS category,
+	pc.subcat AS sub_category,
+	pc.maintenance,
+	pn.prd_cost AS cost,
+	pn.prd_line AS product_line,
+	pn.prd_start_dt AS start_date
+FROM Silver.crm_prd_info pn
+LEFT JOIN Silver.erp_px_cat_g1v2 as pc
+ON		pc.id = pn.cat_id
+WHERE pn.prd_end_dt IS NULL;
+
+	GO
+
+--CREATE Fact Sales Object(View)
+
+IF OBJECT_ID('Gold.fact_sales','V') IS NOT NULL
+	DROP VIEW Gold.fact_sales;
+
+	GO
+
+ CREATE VIEW Gold.fact_sales AS
+ SELECT
+	  sd.sls_ord_num AS order_number,
+      pr.product_key, --Surrogated key from Gold.dim_products
+      cu.customer_key,  --Surrogated key from Gold.dim_customer
+      sd.sls_order_dt AS order_date,
+      sd.sls_ship_dt as shipping_date,
+      sd.sls_due_dt as due_date,
+      sd.sls_sales AS sales_amount,
+      sd.sls_quantity as sales_quantity,
+      sd.sls_price as sales_price
+ FROM Silver.crm_sales_details sd
+ LEFT JOIN Gold.dim_customers cu
+ ON		cu.customer_id = sd.sls_cust_id
+ LEFT JOIN Gold.dim_products pr
+ ON		pr.product_number= sd.sls_prd_key;
+
+ 	GO
+
+-------------END OF SCRIPT----------------------------------------------------------------
+
