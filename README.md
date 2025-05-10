@@ -84,4 +84,4 @@ data-warehouse-project/
 
 
 
-I am Akram Hussain working in Cyient for Honeywell Product AfterMarket "Reliability Analyst".My job include collection of Product removal and Repair Information from field data using SAP and Honeywell database ,Data Cleaning and Transformation and Generating Insights from the data to improve Reliability of the Products perforamance ,Future Failure Prediction ,Root Cause analysis for the unwanted repair to save future collastropic failure and enhance Safety, Makin Enginerring Modification and Improvement Decision.
+I am #Akram Hussain working in Cyient for Honeywell Product AfterMarket #"Reliability Analyst".My job include collection of Product removal and Repair Information from field data using SAP and Honeywell database ,Data Cleaning and Transformation and Generating Insights from the data to improve Reliability of the Products perforamance ,Future Failure Prediction ,Root Cause analysis for the unwanted repair to save future collastropic failure and enhance Safety, Makin Enginerring Modification and Improvement Decision.
